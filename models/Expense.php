@@ -7,14 +7,18 @@ class Expense {
     private string $title;
     private float $total;
     private Category $category;
+    private User $buyer;
+    private array $users;
     
     //CONSTRUCTOR
-    public function __construct(string $title, float $total, Category $category)
+    public function __construct(string $title, float $total, Category $category, User $buyer, array $users)
     {
         $this->id = null;
         $this->title = $title;
         $this->total = $total;
         $this->category = $category;
+        $this->buyer = $buyer;
+        $this->users = $users;
     }
     
     //ID
@@ -55,6 +59,26 @@ class Expense {
     public function setCategory(Category $category)
     {
         $this->category = $category;
+    }
+    
+    //BUYER
+    public function  getBuyer() : User
+    {
+        return $this->buyer;
+    }
+    public function setBuyer(User $buyer)
+    {
+        $this->buyer = $buyer;
+    }
+    
+    //USERS
+    public function  getUsers() : array
+    {
+        return $this->users;
+    }
+    public function setUsers(array $users)
+    {
+        $this->users = $users;
     }
     
 }

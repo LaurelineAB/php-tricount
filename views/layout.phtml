@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tricount</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.php">Liste des utilisateurs</a></li>
+                <li><a href="index.php?route=user-create">Ajouter un utilisateur</a></li>
+                <li><a href="index.php?route=user-edit">Modifier un utilisateur</a></li>
+            </ul>
+        </nav>
+    </header>
+    <?php
+    
+        require "users/$template.phtml";
+        
+    ?>
+</body>
+</html>

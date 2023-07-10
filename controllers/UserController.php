@@ -1,6 +1,6 @@
 <?php
 
-require "AbstractController.php";
+require_once "AbstractController.php";
 
 class UserController extends AbstractController {
     
@@ -11,7 +11,7 @@ class UserController extends AbstractController {
         $this->manager = $manager;
     }
     
-    public function UsersIndex()
+    public function usersIndex()
     {
         $users = $this->manager->getAllUsers();
         $this->render("index", $users);

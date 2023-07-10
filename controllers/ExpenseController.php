@@ -1,6 +1,6 @@
 <?php
 
-require "AbstractController.php";
+require_once "AbstractController.php";
 
 class ExpenseController extends AbstractController {
     
@@ -11,32 +11,44 @@ class ExpenseController extends AbstractController {
         $this->manager = $manager;
     }
     
-    //GET EXPENSES OF USER
     public function expensesIndex()
     {
-        $expenses = $this->manager->getExpensesByUser();
+        $expenses = $this->manager->getAllExpenses();
+        $this->render("index", $expenses);
+    }
+    
+    //GET EXPENSES OF USER
+    public function userExpensesIndex()
+    {
+        $expenses = $this->manager->getExpensesByUser($_SESSION['user']);
         $this->render("index", $expenses);
     }
     
     //CREATE A NEW EXPENSE
-    public function createCategory(array $post)
+    public function createExpense(array $post, CategoryManager $categoryManager)
     {
-        if(isset($_POST['submit-new-category']))
+        if(isset($_POST['submit-new-expense']))
         {
-            $category = new Category($post['name'], $post['description']);
-            $this->manager->insertCategory($category);
+            $category = $categoryManager->getCategoryById($post['category']);
+            $buyer = $_SESSION['user'];
+            $users = $post['users'];
+            $expense = new Expense($post['title'], $post['total'], $category, $buyer, $users);
+            $this->manager->insertCategory($expense);
             $this->render("create", []);
         }
     }
     
     //EDIT CATEGORY
-    public function editCategory(array $post)
+    public function editExpense(array $post, CategoryManager $categoryManager)
     {
-        if(isset($_POST['submit-edit-category']))
+        if(isset($_POST['submit-edit-expense']))
         {
-            $category = new Category($post['name'], $post['description']);
-            $category->setId($post['id']);
-            $this->manager->editCategory($category);
+            $category = $categoryManager->getCategoryById($post['category']);
+            $buyer = $_SESSION['user'];
+            $users = $post['users'];
+            $expense = new Expense($post['title'], $post['total'], $category, $buyer, $users);
+            $expense->setId($post['id']);
+            $this->manager->editCategory($expense);
         }
         $this->render("edit", []);
     }
